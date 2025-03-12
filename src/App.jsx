@@ -68,22 +68,51 @@ function App() {
   };
 
   return (
-    <div style={{ textAlign: "center", padding: "20px", fontFamily: "Arial, sans-serif", backgroundColor: "#f0f8ff", minHeight: "100vh" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+        fontFamily: "Arial, sans-serif",
+        backgroundColor: "#f0f8ff",
+        textAlign: "center",
+        padding: "20px",
+      }}
+    >
       <h2 style={{ color: "#333", fontSize: "28px", fontWeight: "bold" }}>📊 SFD & BMD Calculator</h2>
-      
+
       {/* Problem Statement as Subheading */}
       <h4 style={{ color: "#555", fontSize: "18px", marginTop: "5px", fontStyle: "italic" }}>
         Problem: Analyze the Shear Force Diagram (SFD) and Bending Moment Diagram (BMD) for a Simply Supported Beam subjected to a Single Point Load.
       </h4>
 
-      <div style={{ width: "90%", maxWidth: "500px", margin: "20px auto", padding: "20px", background: "white", borderRadius: "10px", boxShadow: "0px 4px 10px rgba(0,0,0,0.1)" }}>
+      <div
+        style={{
+          width: "400px",
+          padding: "20px",
+          background: "white",
+          borderRadius: "10px",
+          boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+          textAlign: "center",
+          marginTop: "20px",
+        }}
+      >
         <input
           type="number"
           placeholder="Beam Length (m)"
           value={length}
           onChange={(e) => setLength(e.target.value)}
           required
-          style={{ margin: "10px", padding: "12px", width: "90%", borderRadius: "5px", border: "1px solid #ccc", fontSize: "16px" }}
+          style={{
+            margin: "10px",
+            padding: "12px",
+            width: "90%",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
+            fontSize: "16px",
+          }}
         />
         <input
           type="number"
@@ -91,7 +120,14 @@ function App() {
           value={load}
           onChange={(e) => setLoad(e.target.value)}
           required
-          style={{ margin: "10px", padding: "12px", width: "90%", borderRadius: "5px", border: "1px solid #ccc", fontSize: "16px" }}
+          style={{
+            margin: "10px",
+            padding: "12px",
+            width: "90%",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
+            fontSize: "16px",
+          }}
         />
         <input
           type="number"
@@ -99,7 +135,14 @@ function App() {
           value={position}
           onChange={(e) => setPosition(e.target.value)}
           required
-          style={{ margin: "10px", padding: "12px", width: "90%", borderRadius: "5px", border: "1px solid #ccc", fontSize: "16px" }}
+          style={{
+            margin: "10px",
+            padding: "12px",
+            width: "90%",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
+            fontSize: "16px",
+          }}
         />
         <button
           onClick={calculateSFD_BMD}
@@ -122,48 +165,57 @@ function App() {
 
       {error && <p style={{ color: "red", fontWeight: "bold", fontSize: "16px" }}>{error}</p>}
 
-      {chartData && (
-        <div style={{ width: "95%", maxWidth: "900px", margin: "auto", padding: "20px", backgroundColor: "white", borderRadius: "10px", boxShadow: "0px 4px 10px rgba(0,0,0,0.1)" }}>
-          <h3 style={{ color: "#333" }}>Shear Force & Bending Moment Graphs</h3>
-          <div style={{ width: "100%", height: "450px" }}>
-            <Line
-              data={chartData}
-              options={{
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                  x: {
-                    title: {
-                      display: true,
-                      text: "Beam Length (m)",
-                      font: {
-                        size: 16,
-                        weight: "bold",
+      {/* Keep Space Reserved for Chart to Prevent Moving Content */}
+      <div
+        style={{
+          width: "800px",
+          height: "500px",
+          display: chartData ? "block" : "none",
+          marginTop: "20px",
+          backgroundColor: "white",
+          borderRadius: "10px",
+          boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+          padding: "20px",
+          textAlign: "center",
+        }}
+      >
+        {chartData && (
+          <>
+            <h3 style={{ color: "#333" }}>Shear Force & Bending Moment Graphs</h3>
+            <div style={{ width: "100%", height: "400px" }}>
+              <Line
+                data={chartData}
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  scales: {
+                    x: {
+                      title: {
+                        display: true,
+                        text: "Beam Length (m)",
+                        font: { size: 16, weight: "bold" },
+                      },
+                    },
+                    y: {
+                      title: {
+                        display: true,
+                        text: "Force (N) / Moment (Nm)",
+                        font: { size: 16, weight: "bold" },
                       },
                     },
                   },
-                  y: {
-                    title: {
-                      display: true,
-                      text: "Force (N) / Moment (Nm)",
-                      font: {
-                        size: 16,
-                        weight: "bold",
-                      },
-                    },
-                  },
-                },
-              }}
-            />
-          </div>
+                }}
+              />
+            </div>
 
-          <div style={{ marginTop: "20px", padding: "15px", backgroundColor: "#f4f4f4", borderRadius: "8px" }}>
-            <h4 style={{ color: "black", fontSize: "18px", fontWeight: "bold" }}>📌 Maximum Readings:</h4>
-            <p style={{ fontSize: "18px", color: "blue" }}>🔹 Maximum Shear Force: <b>{maxShearForce} N</b></p>
-            <p style={{ fontSize: "18px", color: "red" }}>🔹 Maximum Bending Moment: <b>{maxBendingMoment} Nm</b></p>
-          </div>
-        </div>
-      )}
+            <div style={{ marginTop: "20px", padding: "15px", backgroundColor: "#f4f4f4", borderRadius: "8px" }}>
+              <h4 style={{ color: "black", fontSize: "18px", fontWeight: "bold" }}>📌 Maximum Readings:</h4>
+              <p style={{ fontSize: "18px", color: "blue" }}>🔹 Maximum Shear Force: <b>{maxShearForce} N</b></p>
+              <p style={{ fontSize: "18px", color: "red" }}>🔹 Maximum Bending Moment: <b>{maxBendingMoment} Nm</b></p>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }
